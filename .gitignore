@@ -1,0 +1,9 @@
+# Lavalink Server Directory
+# Note: Lavalink.jar is large - consider using Railway's file upload instead of git
+
+# If you want to track the jar in git, remove this line
+# Lavalink.jar
+
+# But it's better to download it on Railway or use a build step
+# Railway can download it during deployment if needed
+
