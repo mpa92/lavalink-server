@@ -17,16 +17,14 @@ This repository contains everything needed to deploy a Lavalink v4 server on Rai
    - Click "New Service" → "Deploy from GitHub repo"
    - Select this repository
 
-2. **Configure service (IMPORTANT):**
-   - Go to **Settings** → **Deploy**
-   - **Start Command**: Set to `java -jar Lavalink.jar`
-   - Railway may not auto-detect Java - you must set this manually!
+2. **Configure service:**
+   - Railway will now use the `Dockerfile` for deployment
+   - No manual configuration needed - the Dockerfile handles everything!
+   - The service will automatically build and start
    
-   **Alternative:** If Railway still can't detect the project:
-   - Go to **Settings** → **Service**
-   - Set **Root Directory**: `/` (default)
-   - Set **Build Command**: Leave empty (no build needed)
-   - Set **Start Command**: `java -jar Lavalink.jar`
+   **Note:** If you need to override the start command:
+   - Go to **Settings** → **Deploy**
+   - **Start Command**: Leave as default (Dockerfile handles it) OR set to `java -jar Lavalink.jar`
 
 3. **Set environment variables:**
    - `JAVA_OPTS=-Xmx512M` - Adjust memory (Railway free tier supports ~256-512M)
