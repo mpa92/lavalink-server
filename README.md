@@ -17,14 +17,20 @@ This repository contains everything needed to deploy a Lavalink v4 server on Rai
    - Click "New Service" → "Deploy from GitHub repo"
    - Select this repository
 
-2. **Configure service:**
-   - **Service Name**: `lavalink` (or your preferred name)
-   - **Start Command**: `java -jar Lavalink.jar`
-   - Railway will auto-detect and deploy
+2. **Configure service (IMPORTANT):**
+   - Go to **Settings** → **Deploy**
+   - **Start Command**: Set to `java -jar Lavalink.jar`
+   - Railway may not auto-detect Java - you must set this manually!
+   
+   **Alternative:** If Railway still can't detect the project:
+   - Go to **Settings** → **Service**
+   - Set **Root Directory**: `/` (default)
+   - Set **Build Command**: Leave empty (no build needed)
+   - Set **Start Command**: `java -jar Lavalink.jar`
 
-3. **Optional environment variables:**
+3. **Set environment variables:**
    - `JAVA_OPTS=-Xmx512M` - Adjust memory (Railway free tier supports ~256-512M)
-   - `JAVA_OPTS=-Xmx256M` - For lower memory usage
+   - `JAVA_OPTS=-Xmx256M` - For lower memory usage (recommended for free tier)
 
 ### Step 2: Get Service URL
 
