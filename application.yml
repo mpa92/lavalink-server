@@ -7,3 +7,8 @@ lavalink:
     sources:
       youtube: true
       spotify: true
+logging:
+  level:
+    root: INFO
+    lavalink: DEBUG
+    lavalink.server.io.SocketContext: TRACE
