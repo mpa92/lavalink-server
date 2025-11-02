@@ -6,7 +6,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true
+      youtube: false  # Disable built-in, use plugin instead
       bandcamp: true
       soundcloud: true
       twitch: true
@@ -21,13 +21,11 @@ plugins:
     allowDirectVideoIdAccess: true
     allowDirectPlaylistIdAccess: true
     clients:
-      - MUSIC
       - ANDROID_TESTSUITE
+      - ANDROID_LITE
+      - MUSIC
       - WEB
       - TVHTML5EMBEDDED
-    # IP rotation for better reliability
-    ipBlocks:
-      - "0.0.0.0/0"
 
 logging:
   level:
