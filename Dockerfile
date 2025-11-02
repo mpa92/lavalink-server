@@ -9,7 +9,7 @@ RUN apk add --no-cache wget libgcc gcompat
 COPY Lavalink.jar .
 COPY application.yml .
 
-# Copy plugins directory (contains lavasrc.jar and youtube-plugin.jar)
+# Copy plugins directory (contains youtube-plugin only)
 COPY plugins/ plugins/
 
 # Expose Lavalink port
