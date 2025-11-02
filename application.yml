@@ -6,7 +6,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: false  # Use plugin instead (built-in has cipher errors)
+      youtube: true  # Enable for search - plugin will handle playback
       http: true
 
 plugins:
