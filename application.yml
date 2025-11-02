@@ -4,54 +4,16 @@ server:
 
 lavalink:
   server:
-    # Keep built-in YT off - use YouTube plugin only
-    sources:
-      youtube: false   # built-in YT OFF
-      http: false
-      soundcloud: false
-      bandcamp: false
-      twitch: false
-      vimeo: false
-      local: false
     password: "youshallnotpass"
-    resumable: true
-    resume-timeout: 60
-
-plugins:
-  youtube:
-    enabled: true
-    # Use the YouTube plugin only with non-WEB clients (no login/cipher)
-    clients:
-      - ANDROID_MUSIC
-      - ANDROID
-      - TVHTML5EMBEDDED
-      - MUSIC
-    oauth:
-      enabled: false   # you said no auth
-
-  lavasrc:
     sources:
-      spotify: true
-      deezer: false
-      applemusic: false
-    # In LavaSrc, search YT Music first, then YT, and prefer "audio/lyrics" variants before generic
-    providers:
-      - 'ytmsearch:"%ISRC%"'        # YT Music by ISRC (best quality)
-      - 'ytmsearch:%QUERY% audio'   # YT Music audio uploads (rarely gated)
-      - 'ytmsearch:%QUERY% lyrics'  # YT Music lyrics videos
-      - 'ytsearch:"%ISRC%"'         # Regular YouTube by ISRC
-      - 'ytsearch:%QUERY% audio'    # Regular YouTube audio uploads
-      - 'ytsearch:%QUERY% lyrics'   # Regular YouTube lyrics videos
-      - 'ytsearch:%QUERY%'          # Generic fallback
-    spotify:
-      clientId: "${SPOTIFY_CLIENT_ID}"
-      clientSecret: "${SPOTIFY_CLIENT_SECRET}"
-      countryCode: "US"
-      playlistLoadLimit: 6
-      albumLoadLimit: 6
+      youtube: true
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      http: true
 
 logging:
   level:
     root: INFO
-    lavalink: DEBUG
-    lavalink.server.io.SocketContext: TRACE
+    lavalink: INFO
