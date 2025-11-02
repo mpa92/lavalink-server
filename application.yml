@@ -6,16 +6,28 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true  # Enable for search - plugin will handle playback
+      youtube: true
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
       http: true
+      local: false
 
 plugins:
   youtube:
     enabled: true
+    allowSearch: true
+    allowDirectVideoIdAccess: true
+    allowDirectPlaylistIdAccess: true
     clients:
       - MUSIC
-      - ANDROID_MUSIC
+      - ANDROID_TESTSUITE
+      - WEB
       - TVHTML5EMBEDDED
+    # IP rotation for better reliability
+    ipBlocks:
+      - "0.0.0.0/0"
 
 logging:
   level:
