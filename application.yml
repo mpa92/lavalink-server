@@ -22,14 +22,17 @@ plugins:
   youtube:
     enabled: true
     # Use only clients that don't hit WEB's fragile cipher/login
+    # Try TVHTML5EMBEDDED first (most reliable without OAuth), then others
     clients:
-      - ANDROID
-      - ANDROID_MUSIC
-      - TVHTML5EMBEDDED
-      - MUSIC
+      - TVHTML5EMBEDDED    # Try this first - often works without OAuth
+      - MUSIC               # YouTube Music - may work without full OAuth
+      - ANDROID             # May require OAuth for some videos
+      - ANDROID_MUSIC       # May require OAuth for some videos
     # Keep WEB out of the list. If you ever re-add WEB, you must run a remote cipher.
+    # Enable OAuth to handle "Please sign in" errors from ANDROID clients
+    # Note: May need Google OAuth credentials for full functionality
     oauth:
-      enabled: false   # set true only if you later add proper OAuth for gated videos
+      enabled: true   # Enable to handle authentication-required videos
 
   # ✅ Spotify catalog, mirror to YouTube ONLY
   lavasrc:
