@@ -31,10 +31,10 @@ plugins:
       spotify: true
       deezer: false
       applemusic: false
-    # Providers limited to YouTube only
+    # Providers - try YouTube Music first (better for music, less auth issues)
     providers:
-      - "ytsearch:\"%ISRC%\""   # best match first
-      - "ytsearch:%QUERY%"      # fallback
+      - "ytmsearch:\"%QUERY%\""      # YouTube Music search (best for music)
+      - "ytsearch:\"%QUERY%\""        # Fallback to regular YouTube
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
