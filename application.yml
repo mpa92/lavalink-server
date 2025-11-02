@@ -4,9 +4,9 @@ server:
 
 lavalink:
   server:
-    # Disable core sources you don't want. We will use the YouTube PLUGIN instead.
+    # Turn OFF the built-in Lavaplayer YouTube. We'll use the YouTube plugin only.
     sources:
-      youtube: false        # ❌ turn OFF built-in lavaplayer YouTube
+      youtube: false
       soundcloud: false
       bandcamp: false
       http: false
@@ -21,26 +21,32 @@ plugins:
   # ✅ YouTube plugin ONLY
   youtube:
     enabled: true
-    # Use only clients that work without OAuth credentials
-    # Removed ANDROID/ANDROID_MUSIC - they consistently require OAuth
+    # Force clients that don't hit the fragile WEB login/cipher path
     clients:
-      - TVHTML5EMBEDDED    # Most reliable - works without OAuth for most videos
-      - MUSIC               # YouTube Music - usually works without OAuth
-    # Keep WEB and ANDROID clients out - they require OAuth/credentials
-    # OAuth disabled - without Google credentials, it won't help
+      - TVHTML5EMBEDDED
+      - ANDROID
+      - ANDROID_MUSIC
+      - MUSIC
+    # Leave WEB out entirely. If you ever re-add WEB, you *must* provide OAuth/remote cipher.
+
+    # OPTIONAL: if you still get "Please sign in" on certain videos, enable OAuth:
     oauth:
       enabled: false
+      # When you're ready to enable, flip to true and provide these via env vars:
+      # clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
+      # clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
+      # refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
 
-  # ✅ Spotify catalog, mirror to YouTube ONLY
+  # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
     sources:
       spotify: true
       deezer: false
       applemusic: false
-    # Provider order limited to YouTube (two strategies)
+    # Providers limited to YouTube only
     providers:
-      - "ytsearch:\"%ISRC%\""   # try YouTube by ISRC first (cleanest match)
-      - "ytsearch:%QUERY%"      # then fall back to normal YouTube search
+      - "ytsearch:\"%ISRC%\""   # best match first
+      - "ytsearch:%QUERY%"      # fallback
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
