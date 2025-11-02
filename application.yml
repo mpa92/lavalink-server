@@ -6,7 +6,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true
+      youtube: false  # Disable built-in (has cipher errors)
       bandcamp: true
       soundcloud: true
       twitch: true
@@ -14,6 +14,13 @@ lavalink:
       http: true
 
 plugins:
+  youtube:
+    enabled: true
+    clients:
+      - MUSIC
+      - ANDROID_MUSIC
+      - TVHTML5EMBEDDED
+  
   lavasrc:
     sources:
       spotify: true
