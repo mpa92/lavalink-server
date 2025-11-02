@@ -18,27 +18,12 @@ lavalink:
     resume-timeout: 60
 
 plugins:
-  # ✅ YouTube plugin ONLY
+  # YouTube plugin
   youtube:
     enabled: true
-    # Force clients that don't hit the fragile WEB login/cipher path
-    # ANDROID and ANDROID_MUSIC removed - they require OAuth
-    # Try TVHTML5EMBEDDED and MUSIC only - these may work without OAuth for some videos
     clients:
       - TVHTML5EMBEDDED
       - MUSIC
-    # Leave WEB, ANDROID, and ANDROID_MUSIC out - they have issues or require OAuth
-    
-    # OAuth disabled - persistent 401 errors indicate OAuth credentials issue
-    # The YouTube plugin will work for videos that don't require authentication
-    # TVHTML5EMBEDDED and MUSIC clients may work without OAuth for most videos
-    # If you need OAuth later, verify:
-    # 1. Client ID, Secret, and Refresh Token all from the SAME OAuth client
-    # 2. Refresh token was generated with the correct scopes (https://www.googleapis.com/auth/youtube)
-    # 3. OAuth client is in "Testing" mode and your email is a test user
-    # 4. Redirect URI matches exactly: https://developers.google.com/oauthplayground
-    oauth:
-      enabled: false
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
