@@ -6,11 +6,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: false  # Disable built-in (has cipher errors)
-      bandcamp: true
-      soundcloud: true
-      twitch: true
-      vimeo: true
+      youtube: false  # Use plugin instead (built-in has cipher errors)
       http: true
 
 plugins:
@@ -20,20 +16,6 @@ plugins:
       - MUSIC
       - ANDROID_MUSIC
       - TVHTML5EMBEDDED
-  
-  lavasrc:
-    sources:
-      spotify: true
-      deezer: false
-      applemusic: false
-    providers:
-      - 'ytmsearch:"%ISRC%"'
-      - 'ytmsearch:%QUERY% audio'
-      - 'ytsearch:%QUERY%'
-    spotify:
-      clientId: "${SPOTIFY_CLIENT_ID}"
-      clientSecret: "${SPOTIFY_CLIENT_SECRET}"
-      countryCode: "US"
 
 logging:
   level:
