@@ -4,9 +4,9 @@ server:
 
 lavalink:
   server:
-    # Turn OFF the built-in Lavaplayer YouTube. We'll use the YouTube plugin only.
+    # Enable built-in YouTube source (worked yesterday, more lenient with auth)
     sources:
-      youtube: false
+      youtube: true
       soundcloud: false
       bandcamp: false
       http: false
@@ -18,7 +18,7 @@ lavalink:
     resume-timeout: 60
 
 plugins:
-  # YouTube plugin
+  # YouTube plugin - keep as backup if built-in has issues
   youtube:
     enabled: true
     clients:
