@@ -13,6 +13,9 @@ plugins:
       - "WEB_REMIX"
       - "WEB"
       - "TVHTML5_SIMPLY_EMBEDDED_PLAYER"
+    remoteCipher:
+      enabled: true
+      url: "https://cipher.lavalink.dev"
   lavasrc:
     providers:
       - "ytmsearch:\"%QUERY%\""
