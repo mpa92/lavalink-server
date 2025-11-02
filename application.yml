@@ -29,16 +29,15 @@ plugins:
       - MUSIC
     # Leave WEB, ANDROID, and ANDROID_MUSIC out - they have issues or require OAuth
     
-    # OAuth disabled - refresh token returning 401
-    # The refresh token format might be incorrect or the token needs to be regenerated
-    # Common issues:
-    # 1. Refresh token copied incorrectly (missing characters, wrong token type)
-    # 2. Client ID/Secret don't match the refresh token
-    # 3. Token was revoked or expired
+    # OAuth enabled - verify all three credentials are from the SAME OAuth client
+    # CRITICAL: Client ID, Client Secret, and Refresh Token MUST all come from the same Google OAuth client
+    # Your refresh token: 186565225241-d5vq8ddfanrp99tn87ongct02n723knd.apps.googleusercontent.com
+    # Make sure the refresh token was generated using the same Client ID/Secret
     oauth:
-      enabled: false
-      # To fix: Generate a new refresh token from OAuth Playground
-      # Make sure to click "Exchange authorization code for tokens" and copy the refresh_token field
+      enabled: true
+      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
+      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
+      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
