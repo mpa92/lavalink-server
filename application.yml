@@ -4,46 +4,43 @@ server:
 
 lavalink:
   server:
-    password: "youshallnotpass"
+    # Disable core sources you don't want. We will use the YouTube PLUGIN instead.
     sources:
-      youtube: false  # Disabled - use YouTube plugin instead (avoids cipher issues)
+      youtube: false        # ❌ turn OFF built-in lavaplayer YouTube
       soundcloud: false
       bandcamp: false
       http: false
       twitch: false
       vimeo: false
       local: false
+    password: "youshallnotpass"
     resumable: true
     resume-timeout: 60
 
 plugins:
-  # ✅ YouTube plugin - avoid WEB client (causes cipher/sign-in errors)
+  # ✅ YouTube plugin ONLY
   youtube:
     enabled: true
-    # These clients do not require the fragile WEB decipher
+    # Use only clients that don't hit WEB's fragile cipher/login
     clients:
       - ANDROID
       - ANDROID_MUSIC
       - TVHTML5EMBEDDED
       - MUSIC
-    # OAuth disabled by default - only enable if you hit "Please sign in" errors
-    # If needed, uncomment and follow plugin OAuth setup steps
-    # oauth:
-    #   enabled: true
+    # Keep WEB out of the list. If you ever re-add WEB, you must run a remote cipher.
+    oauth:
+      enabled: false   # set true only if you later add proper OAuth for gated videos
 
-  # ✅ Spotify catalog (mirrors to YouTube only)
+  # ✅ Spotify catalog, mirror to YouTube ONLY
   lavasrc:
     sources:
       spotify: true
-      youtube: true  # Enable YouTube source in lavasrc (uses YouTube plugin)
       deezer: false
       applemusic: false
-    # Provider order LIMITED to YouTube only (no Deezer/Apple)
-    # Try YouTube by ISRC first (cleanest), then by query
-    # Using ytsearch (not ytmsearch) for compatibility with YouTube plugin
+    # Provider order limited to YouTube (two strategies)
     providers:
-      - "ytsearch:\"%ISRC%\""
-      - "ytsearch:%QUERY%"
+      - "ytsearch:\"%ISRC%\""   # try YouTube by ISRC first (cleanest match)
+      - "ytsearch:%QUERY%"      # then fall back to normal YouTube search
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
