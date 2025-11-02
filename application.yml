@@ -1,48 +1,54 @@
 server:
   port: 2333
   address: 0.0.0.0
+
 lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: false  # Disabled - using YouTube source plugin instead
-      spotify: false  # Disabled - using lavasrc plugin instead
+      youtube: true  # Use built-in YouTube source (backup)
+      soundcloud: false
+      bandcamp: false
+      http: false
+      twitch: false
+      vimeo: false
+      local: false
+    resumable: true
+    resume-timeout: 60
+
 plugins:
+  # ✅ YouTube plugin - avoid WEB client (causes cipher/sign-in errors)
   youtube:
-    # Client order: Try clients that work without OAuth first, then fallback to WEB if needed
-    # Direct YouTube URLs work with these, but Spotify mirroring may need different clients
+    enabled: true
+    # These clients do not require the fragile WEB decipher
     clients:
-      - "TVHTML5EMBEDDED"    # TV embedded - works for direct URLs, may not need OAuth
-      - "MUSIC"              # YouTube Music - often works without full OAuth
-      - "ANDROID"            # Android - may require OAuth for some content
-      - "ANDROID_MUSIC"      # Android Music - may require OAuth
-      - "WEB"                # Last resort - requires cipher but works when others fail
-    # OAuth enabled but may need Google OAuth credentials for full functionality
-    # For now, clients that don't require it should work for most content
-    oauth:
-      enabled: true  # Helps but may need actual Google OAuth tokens for full auth
+      - ANDROID
+      - ANDROID_MUSIC
+      - TVHTML5EMBEDDED
+      - MUSIC
+    # OAuth disabled by default - only enable if you hit "Please sign in" errors
+    # If needed, uncomment and follow plugin OAuth setup steps
+    # oauth:
+    #   enabled: true
+
+  # ✅ Spotify catalog (mirrors to YouTube only)
   lavasrc:
-    # Provider priority: ISRC-based searches first (more reliable), then queries
-    # ISRC-based searches use direct track matching which can avoid some YouTube cipher issues
-    providers:
-      - "ytmsearch:\"%ISRC%\""  # YouTube Music by ISRC (direct match, more reliable)
-      - "ytsearch:\"%ISRC%\""   # YouTube by ISRC (fallback with ISRC)
-      - "ytmsearch:\"%QUERY%\"" # YouTube Music by query (last resort for music)
-      - "ytsearch:\"%QUERY%\""  # YouTube by query (final fallback)
     sources:
       spotify: true
-      youtube: true  # Enable YouTube in lavasrc (uses YouTube source plugin)
-      # Deezer and Apple Music disabled - require master keys/credentials
-      # To enable, add credentials and uncomment:
-      # applemusic: true
-      # deezer: true
-      # Then add provider: "dzisrc:%ISRC%" or "amsearch:%QUERY%"
+      deezer: false
+      applemusic: false
+    # Provider order LIMITED to YouTube only (no Deezer/Apple)
+    # Try YouTube by ISRC first (cleanest), then by query
+    providers:
+      - "ytsearch:\"%ISRC%\""
+      - "ytsearch:%QUERY%"
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
       countryCode: "US"
       playlistLoadLimit: 6
       albumLoadLimit: 6
+
 logging:
   level:
     root: INFO
