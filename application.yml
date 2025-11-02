@@ -10,12 +10,9 @@ lavalink:
 plugins:
   youtube:
     clients:
-      - "WEB_REMIX"
       - "WEB"
-      - "TVHTML5_SIMPLY_EMBEDDED_PLAYER"
-    remoteCipher:
-      enabled: true
-      url: "https://cipher.lavalink.dev"
+    # Remote cipher server disabled - cipher.lavalink.dev not accessible from Railway
+    # Plugin will use local cipher extraction instead
   lavasrc:
     providers:
       - "ytmsearch:\"%QUERY%\""
