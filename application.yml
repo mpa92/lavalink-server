@@ -11,7 +11,7 @@ plugins:
   lavasrc:
     sources:
       spotify: true
-      youtube: false  # Disable YouTube in lavasrc (requires separate YouTube plugin)
+      youtube: true  # Enable YouTube in lavasrc (requires YouTube source plugin)
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
