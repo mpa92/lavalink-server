@@ -10,24 +10,40 @@ lavalink:
 plugins:
   youtube:
     clients:
-      - "MUSIC"  # YouTube Music client - may not require signature extraction
-      - "WEB"    # Fallback to WEB if MUSIC fails
+      - "MUSIC"           # YouTube Music client - may bypass some cipher requirements
+      - "TVHTML5EMBEDDED" # Alternative client option
+      - "ANDROID_MUSIC"   # Mobile client - often more stable
+      - "WEB"             # Fallback to WEB if others fail
     # Remote cipher server disabled - cipher.lavalink.dev not accessible from Railway
-    # Plugin will use local cipher extraction instead
+    # To enable remote cipher: deploy yt-cipher server and set:
+    # remoteCipher:
+    #   url: "http://yt-cipher:8001"
+    #   password: "yt-cipher-token"
   lavasrc:
+    # Provider priority: ISRC-based direct sources first, then queries, YouTube last
+    # This reduces dependence on YouTube's signature cipher system
     providers:
-      - "ytmsearch:\"%QUERY%\""
-      - "ytmsearch:\"%ISRC%\""
-      - "ytsearch:\"%QUERY%\""
+      - "dzisrc:%ISRC%"        # Deezer by ISRC (direct match, avoids YouTube)
+      - "amsearch:%QUERY%"     # Apple Music search (avoids YouTube)
+      - "ytmsearch:\"%ISRC%\"" # YouTube Music by ISRC (fallback if ISRC available)
+      - "ytsearch:\"%ISRC%\""  # YouTube by ISRC (fallback)
+      - "ytmsearch:\"%QUERY%\"" # YouTube Music by query (last resort for music)
+      - "ytsearch:\"%QUERY%\""  # YouTube by query (final fallback)
     sources:
       spotify: true
-      youtube: true  # Enable YouTube in lavasrc (uses YouTube source plugin)
+      applemusic: true         # Enable Apple Music source
+      deezer: true             # Enable Deezer source
+      youtube: true            # Enable YouTube in lavasrc (uses YouTube source plugin)
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
       countryCode: "US"
       playlistLoadLimit: 6
       albumLoadLimit: 6
+    # Note: Deezer and Apple Music may work without credentials for basic searches
+    # Add credentials in Railway environment variables if needed:
+    # DEEZER_ARL=<your-deezer-arl-cookie>
+    # APPLE_MUSIC_TOKEN=<your-apple-music-token>
 logging:
   level:
     root: INFO
