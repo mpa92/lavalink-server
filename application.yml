@@ -9,20 +9,18 @@ lavalink:
       spotify: false  # Disabled - using lavasrc plugin instead
 plugins:
   youtube:
-    # Prefer clients that don't require fragile WEB signature deciphering
-    # Order: most reliable first (no cipher needed) to least reliable (requires cipher)
+    # Client order: Try clients that work without OAuth first, then fallback to WEB if needed
+    # Direct YouTube URLs work with these, but Spotify mirroring may need different clients
     clients:
-      - "ANDROID"           # Android client - no cipher required
-      - "ANDROID_MUSIC"     # Android Music client - stable, no cipher
-      - "TVHTML5EMBEDDED"    # TV embedded client - good fallback
-      - "MUSIC"              # YouTube Music client - may bypass some cipher
-    # WEB client excluded - requires signature extraction that's currently broken
-    # If you need WEB, deploy a remote cipher server:
-    # remoteCipher:
-    #   url: "http://yt-cipher:8001"
-    #   password: "yt-cipher-token"
+      - "TVHTML5EMBEDDED"    # TV embedded - works for direct URLs, may not need OAuth
+      - "MUSIC"              # YouTube Music - often works without full OAuth
+      - "ANDROID"            # Android - may require OAuth for some content
+      - "ANDROID_MUSIC"      # Android Music - may require OAuth
+      - "WEB"                # Last resort - requires cipher but works when others fail
+    # OAuth enabled but may need Google OAuth credentials for full functionality
+    # For now, clients that don't require it should work for most content
     oauth:
-      enabled: true  # Optional but helps for some gated videos
+      enabled: true  # Helps but may need actual Google OAuth tokens for full auth
   lavasrc:
     # Provider priority: ISRC-based searches first (more reliable), then queries
     # ISRC-based searches use direct track matching which can avoid some YouTube cipher issues
