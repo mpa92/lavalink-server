@@ -20,30 +20,27 @@ plugins:
     #   url: "http://yt-cipher:8001"
     #   password: "yt-cipher-token"
   lavasrc:
-    # Provider priority: ISRC-based direct sources first, then queries, YouTube last
-    # This reduces dependence on YouTube's signature cipher system
+    # Provider priority: ISRC-based searches first (more reliable), then queries
+    # ISRC-based searches use direct track matching which can avoid some YouTube cipher issues
     providers:
-      - "dzisrc:%ISRC%"        # Deezer by ISRC (direct match, avoids YouTube)
-      - "amsearch:%QUERY%"     # Apple Music search (avoids YouTube)
-      - "ytmsearch:\"%ISRC%\"" # YouTube Music by ISRC (fallback if ISRC available)
-      - "ytsearch:\"%ISRC%\""  # YouTube by ISRC (fallback)
+      - "ytmsearch:\"%ISRC%\""  # YouTube Music by ISRC (direct match, more reliable)
+      - "ytsearch:\"%ISRC%\""   # YouTube by ISRC (fallback with ISRC)
       - "ytmsearch:\"%QUERY%\"" # YouTube Music by query (last resort for music)
       - "ytsearch:\"%QUERY%\""  # YouTube by query (final fallback)
     sources:
       spotify: true
-      applemusic: true         # Enable Apple Music source
-      deezer: true             # Enable Deezer source
-      youtube: true            # Enable YouTube in lavasrc (uses YouTube source plugin)
+      youtube: true  # Enable YouTube in lavasrc (uses YouTube source plugin)
+      # Deezer and Apple Music disabled - require master keys/credentials
+      # To enable, add credentials and uncomment:
+      # applemusic: true
+      # deezer: true
+      # Then add provider: "dzisrc:%ISRC%" or "amsearch:%QUERY%"
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
       countryCode: "US"
       playlistLoadLimit: 6
       albumLoadLimit: 6
-    # Note: Deezer and Apple Music may work without credentials for basic searches
-    # Add credentials in Railway environment variables if needed:
-    # DEEZER_ARL=<your-deezer-arl-cookie>
-    # APPLE_MUSIC_TOKEN=<your-apple-music-token>
 logging:
   level:
     root: INFO
