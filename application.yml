@@ -29,13 +29,13 @@ plugins:
       - MUSIC
     # Leave WEB out entirely. If you ever re-add WEB, you *must* provide OAuth/remote cipher.
 
-    # OPTIONAL: if you still get "Please sign in" on certain videos, enable OAuth:
+    # OAuth enabled - requires YOUTUBE_OAUTH_* environment variables in Railway
+    # Get credentials from: https://console.cloud.google.com/
     oauth:
-      enabled: false
-      # When you're ready to enable, flip to true and provide these via env vars:
-      # clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
-      # clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
-      # refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
+      enabled: true
+      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
+      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
+      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
