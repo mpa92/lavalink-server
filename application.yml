@@ -8,6 +8,11 @@ lavalink:
       youtube: false  # Disabled - using YouTube source plugin instead
       spotify: false  # Disabled - using lavasrc plugin instead
 plugins:
+  youtube:
+    clients:
+      - "WEB_REMIX"
+      - "WEB"
+      - "TVHTML5_SIMPLY_EMBEDDED_PLAYER"
   lavasrc:
     providers:
       - "ytmsearch:\"%QUERY%\""
