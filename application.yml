@@ -29,14 +29,13 @@ plugins:
       - MUSIC
     # Leave WEB and ANDROID out entirely - they have issues
     
-    # OAuth temporarily disabled - getting 401 error
-    # TODO: Regenerate refresh token and verify credentials
+    # OAuth enabled - requires YOUTUBE_OAUTH_* environment variables in Railway
+    # Make sure all three variables are set: CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN
     oauth:
-      enabled: false
-      # When OAuth works, enable with:
-      # clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
-      # clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
-      # refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
+      enabled: true
+      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
+      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
+      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
