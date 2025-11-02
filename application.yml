@@ -4,13 +4,12 @@ server:
 
 lavalink:
   server:
-    # Disable built-in YouTube source - it fails with cipher extraction errors
-    # YouTube plugin handles this better
+    # Keep built-in YT off - use YouTube plugin only
     sources:
-      youtube: false
+      youtube: false   # built-in YT OFF
+      http: false
       soundcloud: false
       bandcamp: false
-      http: false
       twitch: false
       vimeo: false
       local: false
@@ -21,7 +20,7 @@ lavalink:
 plugins:
   youtube:
     enabled: true
-    # Non-WEB clients only (no login/cipher)
+    # Use the YouTube plugin only with non-WEB clients (no login/cipher)
     clients:
       - ANDROID_MUSIC
       - ANDROID
@@ -35,14 +34,15 @@ plugins:
       spotify: true
       deezer: false
       applemusic: false
+    # In LavaSrc, search YT Music first, then YT, and prefer "audio/lyrics" variants before generic
     providers:
-      - 'ytmsearch:"%ISRC%"'
-      - 'ytmsearch:%QUERY% audio'
-      - 'ytmsearch:%QUERY% lyrics'
-      - 'ytsearch:"%ISRC%"'
-      - 'ytsearch:%QUERY% audio'
-      - 'ytsearch:%QUERY% lyrics'
-      - 'ytsearch:%QUERY%'
+      - 'ytmsearch:"%ISRC%"'        # YT Music by ISRC (best quality)
+      - 'ytmsearch:%QUERY% audio'   # YT Music audio uploads (rarely gated)
+      - 'ytmsearch:%QUERY% lyrics'  # YT Music lyrics videos
+      - 'ytsearch:"%ISRC%"'         # Regular YouTube by ISRC
+      - 'ytsearch:%QUERY% audio'    # Regular YouTube audio uploads
+      - 'ytsearch:%QUERY% lyrics'   # Regular YouTube lyrics videos
+      - 'ytsearch:%QUERY%'          # Generic fallback
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
