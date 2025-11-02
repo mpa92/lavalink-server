@@ -29,14 +29,16 @@ plugins:
       - MUSIC
     # Leave WEB, ANDROID, and ANDROID_MUSIC out - they have issues or require OAuth
     
-    # OAuth enabled - verify tokens are correct in Railway environment variables
-    # Make sure variables are set exactly as: YOUTUBE_OAUTH_CLIENT_ID, YOUTUBE_OAUTH_CLIENT_SECRET, YOUTUBE_OAUTH_REFRESH_TOKEN
-    # No extra quotes or spaces around values
+    # OAuth disabled - refresh token returning 401
+    # The refresh token format might be incorrect or the token needs to be regenerated
+    # Common issues:
+    # 1. Refresh token copied incorrectly (missing characters, wrong token type)
+    # 2. Client ID/Secret don't match the refresh token
+    # 3. Token was revoked or expired
     oauth:
-      enabled: true
-      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
-      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
-      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
+      enabled: false
+      # To fix: Generate a new refresh token from OAuth Playground
+      # Make sure to click "Exchange authorization code for tokens" and copy the refresh_token field
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
