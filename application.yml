@@ -9,16 +9,20 @@ lavalink:
       spotify: false  # Disabled - using lavasrc plugin instead
 plugins:
   youtube:
+    # Prefer clients that don't require fragile WEB signature deciphering
+    # Order: most reliable first (no cipher needed) to least reliable (requires cipher)
     clients:
-      - "MUSIC"           # YouTube Music client - may bypass some cipher requirements
-      - "TVHTML5EMBEDDED" # Alternative client option
-      - "ANDROID_MUSIC"   # Mobile client - often more stable
-      - "WEB"             # Fallback to WEB if others fail
-    # Remote cipher server disabled - cipher.lavalink.dev not accessible from Railway
-    # To enable remote cipher: deploy yt-cipher server and set:
+      - "ANDROID"           # Android client - no cipher required
+      - "ANDROID_MUSIC"     # Android Music client - stable, no cipher
+      - "TVHTML5EMBEDDED"    # TV embedded client - good fallback
+      - "MUSIC"              # YouTube Music client - may bypass some cipher
+    # WEB client excluded - requires signature extraction that's currently broken
+    # If you need WEB, deploy a remote cipher server:
     # remoteCipher:
     #   url: "http://yt-cipher:8001"
     #   password: "yt-cipher-token"
+    oauth:
+      enabled: true  # Optional but helps for some gated videos
   lavasrc:
     # Provider priority: ISRC-based searches first (more reliable), then queries
     # ISRC-based searches use direct track matching which can avoid some YouTube cipher issues
