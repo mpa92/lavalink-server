@@ -22,26 +22,34 @@ plugins:
   # YouTube plugin - use only non-WEB clients to avoid login/cipher path
   youtube:
     enabled: true
-    # Use only non-WEB clients so the plugin does not hit the WEB login/cipher path
+    # Use non-WEB clients (ANDROID first often clears sign-in requirements)
     clients:
-      - TVHTML5EMBEDDED
-      - ANDROID
-      - ANDROID_MUSIC
-      - MUSIC
+      - ANDROID          # Often clears sign-in for specific tracks
+      - ANDROID_MUSIC    # YouTube Music client
+      - TVHTML5EMBEDDED  # Embedded player client
+      - MUSIC            # YouTube Music client
     # Keep WEB out of this list. Do NOT enable oauth if you don't want auth.
+    # Optional: Add remote cipher service if available (helps with WEB signatures)
+    # remoteCipher:
+    #   url: "http://yt-cipher:8001"
+    #   password: "strong-shared-token"
 
-  # Spotify catalog → mirror to YouTube (avoid gated "Topic" uploads)
+  # Spotify catalog → mirror to YouTube Music first, then YouTube (avoid gated "Topic" uploads)
   lavasrc:
     sources:
       spotify: true
       deezer: false
       applemusic: false
-    # Keep it YouTube-only for mirroring and avoid gated "Topic" uploads
+    # Force YouTube Music resolution first, then regular YouTube with audio/lyrics bias
+    # This avoids auto-claimed "Topic" tracks that trigger login walls
     providers:
-      - 'ytsearch:"%ISRC%"'        # first try exact match by ISRC
-      - 'ytsearch:%QUERY% audio'   # prefer audio/lyrics uploads (rarely gated)
-      - 'ytsearch:%QUERY% lyrics'
-      - 'ytsearch:%QUERY%'         # generic fallback
+      - 'ytmsearch:"%ISRC%"'           # YT Music by ISRC (best quality)
+      - 'ytmsearch:%QUERY% audio'       # YT Music audio uploads (rarely gated)
+      - 'ytmsearch:%QUERY% lyrics'      # YT Music lyrics videos
+      - 'ytsearch:"%ISRC%"'             # Regular YouTube by ISRC
+      - 'ytsearch:%QUERY% audio'        # Regular YouTube audio uploads
+      - 'ytsearch:%QUERY% lyrics'       # Regular YouTube lyrics videos
+      - 'ytsearch:%QUERY%'              # Generic fallback
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
