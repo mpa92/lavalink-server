@@ -2,8 +2,8 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Install wget for downloading plugin
-RUN apk add --no-cache wget
+# Install wget and required libraries for native code
+RUN apk add --no-cache wget libgcc gcompat
 
 # Copy Lavalink files
 COPY Lavalink.jar .
