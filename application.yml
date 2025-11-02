@@ -6,7 +6,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true  # Use built-in YouTube source (backup)
+      youtube: false  # Disabled - use YouTube plugin instead (avoids cipher issues)
       soundcloud: false
       bandcamp: false
       http: false
@@ -35,10 +35,12 @@ plugins:
   lavasrc:
     sources:
       spotify: true
+      youtube: true  # Enable YouTube source in lavasrc (uses YouTube plugin)
       deezer: false
       applemusic: false
     # Provider order LIMITED to YouTube only (no Deezer/Apple)
     # Try YouTube by ISRC first (cleanest), then by query
+    # Using ytsearch (not ytmsearch) for compatibility with YouTube plugin
     providers:
       - "ytsearch:\"%ISRC%\""
       - "ytsearch:%QUERY%"
