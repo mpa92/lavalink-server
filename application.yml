@@ -5,13 +5,13 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true  # Keep YouTube source enabled (deprecated but works for now)
-      spotify: false  # Disable - using lavasrc plugin instead
+      youtube: false  # Disabled - using YouTube source plugin instead
+      spotify: false  # Disabled - using lavasrc plugin instead
 plugins:
   lavasrc:
     sources:
       spotify: true
-      youtube: true  # Enable YouTube in lavasrc (requires YouTube source plugin)
+      youtube: true  # Enable YouTube in lavasrc (uses YouTube source plugin)
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
