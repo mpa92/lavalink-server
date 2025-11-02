@@ -5,31 +5,57 @@ server:
 lavalink:
   server:
     password: "youshallnotpass"
+    # Performance optimizations for lower latency
+    bufferDurationMs: 400  # Lower = faster response, but may cause stuttering (400ms recommended)
+    frameBufferDurationMs: 5000  # Audio frame buffer (5000ms recommended)
+    playerUpdateInterval: 5  # Player state update interval in ms (lower = more responsive)
+    resamplingQuality: "HIGH"  # Audio quality: LOW, MEDIUM, HIGH
     sources:
-      youtube: false  # Disable built-in, use plugin instead
+      youtube: false  # Disabled - using YouTube Source Plugin instead (built-in is deprecated)
+      youtubeMusic: false  # Disabled - using YouTube Source Plugin instead
       bandcamp: true
       soundcloud: true
       twitch: true
       vimeo: true
       http: true
       local: false
-      spotify: false  # No Spotify plugin installed
+      spotify: true  # Enable Spotify with lavasrc plugin
+
+  plugins:
+    # LavaSrc (mirrors Spotify/Apple to direct sources like Deezer/SoundCloud)
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.1"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
+    # YouTube Source Plugin (replaces deprecated built-in YouTube source)
+    # NOTE: Using local JAR file from plugins/ folder (youtube-plugin-1.13.5.jar)
+    # No Maven dependency needed since JAR is downloaded locally
 
 plugins:
+  lavasrc:
+    sources:
+      spotify: true  # Enable Spotify playback
+    spotify:
+      clientId: "c1508ebfbb1845adaab4e294679977df"
+      clientSecret: "7b4a880641b34db381a27412ebf6cc53"
+      countryCode: "US"
+    # CRITICAL: prefer direct providers first; remove any ytsearch fallbacks
+    # This forces LavaSrc to use Deezer/SoundCloud instead of broken YouTube
+    providers:
+      - 'dzisrc:%ISRC%'      # best match via ISRC on Deezer
+      - 'dzsearch:%QUERY%'   # Deezer search
+      - 'scsearch:%QUERY%'   # SoundCloud search as final fallback
   youtube:
     enabled: true
     allowSearch: true
-    allowDirectVideoIdAccess: true
-    allowDirectPlaylistIdAccess: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
     clients:
-      - ANDROID_TESTSUITE
+      - MUSIC
+      - ANDROID_VR
       - WEB
-      - TVHTML5EMBEDDED
-    oauth:
-      enabled: false
+      - WEBEMBEDDED
 
 logging:
   level:
     root: INFO
     lavalink: INFO
-    youtube: DEBUG
