@@ -22,20 +22,21 @@ plugins:
   youtube:
     enabled: true
     # Force clients that don't hit the fragile WEB login/cipher path
+    # ANDROID removed - it's broken with no known fix
     clients:
       - TVHTML5EMBEDDED
-      - ANDROID
       - ANDROID_MUSIC
       - MUSIC
-    # Leave WEB out entirely. If you ever re-add WEB, you *must* provide OAuth/remote cipher.
-
-    # OAuth enabled - requires YOUTUBE_OAUTH_* environment variables in Railway
-    # Get credentials from: https://console.cloud.google.com/
+    # Leave WEB and ANDROID out entirely - they have issues
+    
+    # OAuth temporarily disabled - getting 401 error
+    # TODO: Regenerate refresh token and verify credentials
     oauth:
-      enabled: true
-      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
-      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
-      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
+      enabled: false
+      # When OAuth works, enable with:
+      # clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
+      # clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
+      # refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
