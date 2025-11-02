@@ -29,15 +29,16 @@ plugins:
       - MUSIC
     # Leave WEB, ANDROID, and ANDROID_MUSIC out - they have issues or require OAuth
     
-    # OAuth enabled - verify all three credentials are from the SAME OAuth client
-    # CRITICAL: Client ID, Client Secret, and Refresh Token MUST all come from the same Google OAuth client
-    # Your refresh token: 186565225241-d5vq8ddfanrp99tn87ongct02n723knd.apps.googleusercontent.com
-    # Make sure the refresh token was generated using the same Client ID/Secret
+    # OAuth disabled - persistent 401 errors indicate OAuth credentials issue
+    # The YouTube plugin will work for videos that don't require authentication
+    # TVHTML5EMBEDDED and MUSIC clients may work without OAuth for most videos
+    # If you need OAuth later, verify:
+    # 1. Client ID, Secret, and Refresh Token all from the SAME OAuth client
+    # 2. Refresh token was generated with the correct scopes (https://www.googleapis.com/auth/youtube)
+    # 3. OAuth client is in "Testing" mode and your email is a test user
+    # 4. Redirect URI matches exactly: https://developers.google.com/oauthplayground
     oauth:
-      enabled: true
-      clientId: ${YOUTUBE_OAUTH_CLIENT_ID}
-      clientSecret: ${YOUTUBE_OAUTH_CLIENT_SECRET}
-      refreshToken: ${YOUTUBE_OAUTH_REFRESH_TOKEN}
+      enabled: false
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
