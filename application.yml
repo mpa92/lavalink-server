@@ -4,9 +4,10 @@ server:
 
 lavalink:
   server:
-    # Enable built-in YouTube source (worked yesterday, more lenient with auth)
+    # Disable built-in YouTube source - it fails with cipher extraction errors
+    # YouTube plugin handles this better
     sources:
-      youtube: true
+      youtube: false
       soundcloud: false
       bandcamp: false
       http: false
@@ -18,12 +19,13 @@ lavalink:
     resume-timeout: 60
 
 plugins:
-  # YouTube plugin - keep as backup if built-in has issues
+  # YouTube plugin - handles cipher extraction better than built-in source
   youtube:
     enabled: true
     clients:
-      - TVHTML5EMBEDDED
-      - MUSIC
+      - WEB_REMIX        # Good for music, less auth issues
+      - TVHTML5EMBEDDED  # Embedded player client
+      - MUSIC            # YouTube Music client
 
   # ✅ Spotify catalog → mirror to YouTube (and nothing else)
   lavasrc:
