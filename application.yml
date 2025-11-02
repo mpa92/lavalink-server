@@ -9,6 +9,9 @@ lavalink:
       spotify: false  # Disabled - using lavasrc plugin instead
 plugins:
   lavasrc:
+    providers:
+      - "ytmsearch:\"%QUERY%\""
+      - "ytsearch:\"%QUERY%\""
     sources:
       spotify: true
       youtube: true  # Enable YouTube in lavasrc (uses YouTube source plugin)
