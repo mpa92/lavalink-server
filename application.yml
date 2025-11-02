@@ -22,12 +22,12 @@ plugins:
   youtube:
     enabled: true
     # Force clients that don't hit the fragile WEB login/cipher path
-    # ANDROID removed - it's broken with no known fix
+    # ANDROID and ANDROID_MUSIC removed - they require OAuth
+    # Try TVHTML5EMBEDDED and MUSIC only - these may work without OAuth for some videos
     clients:
       - TVHTML5EMBEDDED
-      - ANDROID_MUSIC
       - MUSIC
-    # Leave WEB and ANDROID out entirely - they have issues
+    # Leave WEB, ANDROID, and ANDROID_MUSIC out - they have issues or require OAuth
     
     # OAuth disabled - refresh token returns 401 (invalid/expired)
     # To enable OAuth, you need a valid refresh token from OAuth Playground
