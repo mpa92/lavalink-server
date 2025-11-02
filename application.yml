@@ -13,6 +13,7 @@ lavalink:
       vimeo: true
       http: true
       local: false
+      spotify: false  # No Spotify plugin installed
 
 plugins:
   youtube:
@@ -22,12 +23,13 @@ plugins:
     allowDirectPlaylistIdAccess: true
     clients:
       - ANDROID_TESTSUITE
-      - ANDROID_LITE
-      - MUSIC
       - WEB
       - TVHTML5EMBEDDED
+    oauth:
+      enabled: false
 
 logging:
   level:
     root: INFO
     lavalink: INFO
+    youtube: DEBUG
