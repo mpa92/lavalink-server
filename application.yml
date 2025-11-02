@@ -10,12 +10,14 @@ lavalink:
 plugins:
   youtube:
     clients:
-      - "WEB"
+      - "MUSIC"  # YouTube Music client - may not require signature extraction
+      - "WEB"    # Fallback to WEB if MUSIC fails
     # Remote cipher server disabled - cipher.lavalink.dev not accessible from Railway
     # Plugin will use local cipher extraction instead
   lavasrc:
     providers:
       - "ytmsearch:\"%QUERY%\""
+      - "ytmsearch:\"%ISRC%\""
       - "ytsearch:\"%QUERY%\""
     sources:
       spotify: true
