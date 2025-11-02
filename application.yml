@@ -19,37 +19,30 @@ lavalink:
     resume-timeout: 60
 
 plugins:
-  # YouTube plugin - use only non-WEB clients to avoid login/cipher path
   youtube:
     enabled: true
-    # Use non-WEB clients (ANDROID first often clears sign-in requirements)
+    # Non-WEB clients only (no login/cipher)
     clients:
-      - ANDROID          # Often clears sign-in for specific tracks
-      - ANDROID_MUSIC    # YouTube Music client
-      - TVHTML5EMBEDDED  # Embedded player client
-      - MUSIC            # YouTube Music client
-    # Keep WEB out of this list. Do NOT enable oauth if you don't want auth.
-    # Optional: Add remote cipher service if available (helps with WEB signatures)
-    # remoteCipher:
-    #   url: "http://yt-cipher:8001"
-    #   password: "strong-shared-token"
+      - ANDROID_MUSIC
+      - ANDROID
+      - TVHTML5EMBEDDED
+      - MUSIC
+    oauth:
+      enabled: false   # you said no auth
 
-  # Spotify catalog → mirror to YouTube Music first, then YouTube (avoid gated "Topic" uploads)
   lavasrc:
     sources:
       spotify: true
       deezer: false
       applemusic: false
-    # Force YouTube Music resolution first, then regular YouTube with audio/lyrics bias
-    # This avoids auto-claimed "Topic" tracks that trigger login walls
     providers:
-      - 'ytmsearch:"%ISRC%"'           # YT Music by ISRC (best quality)
-      - 'ytmsearch:%QUERY% audio'       # YT Music audio uploads (rarely gated)
-      - 'ytmsearch:%QUERY% lyrics'      # YT Music lyrics videos
-      - 'ytsearch:"%ISRC%"'             # Regular YouTube by ISRC
-      - 'ytsearch:%QUERY% audio'        # Regular YouTube audio uploads
-      - 'ytsearch:%QUERY% lyrics'       # Regular YouTube lyrics videos
-      - 'ytsearch:%QUERY%'              # Generic fallback
+      - 'ytmsearch:"%ISRC%"'
+      - 'ytmsearch:%QUERY% audio'
+      - 'ytmsearch:%QUERY% lyrics'
+      - 'ytsearch:"%ISRC%"'
+      - 'ytsearch:%QUERY% audio'
+      - 'ytsearch:%QUERY% lyrics'
+      - 'ytsearch:%QUERY%'
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
