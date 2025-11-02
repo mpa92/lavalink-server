@@ -19,24 +19,29 @@ lavalink:
     resume-timeout: 60
 
 plugins:
-  # YouTube plugin - handles cipher extraction better than built-in source
+  # YouTube plugin - use only non-WEB clients to avoid login/cipher path
   youtube:
     enabled: true
+    # Use only non-WEB clients so the plugin does not hit the WEB login/cipher path
     clients:
-      - WEB_REMIX        # Good for music, less auth issues
-      - TVHTML5EMBEDDED  # Embedded player client
-      - MUSIC            # YouTube Music client
+      - TVHTML5EMBEDDED
+      - ANDROID
+      - ANDROID_MUSIC
+      - MUSIC
+    # Keep WEB out of this list. Do NOT enable oauth if you don't want auth.
 
-  # ✅ Spotify catalog → mirror to YouTube (and nothing else)
+  # Spotify catalog → mirror to YouTube (avoid gated "Topic" uploads)
   lavasrc:
     sources:
       spotify: true
       deezer: false
       applemusic: false
-    # Providers - try YouTube Music first (better for music, less auth issues)
+    # Keep it YouTube-only for mirroring and avoid gated "Topic" uploads
     providers:
-      - "ytmsearch:\"%QUERY%\""      # YouTube Music search (best for music)
-      - "ytsearch:\"%QUERY%\""        # Fallback to regular YouTube
+      - 'ytsearch:"%ISRC%"'        # first try exact match by ISRC
+      - 'ytsearch:%QUERY% audio'   # prefer audio/lyrics uploads (rarely gated)
+      - 'ytsearch:%QUERY% lyrics'
+      - 'ytsearch:%QUERY%'         # generic fallback
     spotify:
       clientId: "${SPOTIFY_CLIENT_ID}"
       clientSecret: "${SPOTIFY_CLIENT_SECRET}"
