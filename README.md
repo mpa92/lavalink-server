@@ -73,7 +73,21 @@ lavalink:
     sources:
       youtube: true
       spotify: true
+    plugins:
+      lavasrc:
+        sources:
+          spotify: true
+        spotify:
+          clientId: "${SPOTIFY_CLIENT_ID}"
+          clientSecret: "${SPOTIFY_CLIENT_SECRET}"
+          countryCode: "US"
 ```
+
+**For Spotify Support:**
+- The `lavasrc` plugin is automatically downloaded during Docker build
+- You MUST set `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` environment variables
+- Get your Spotify API credentials from: https://developer.spotify.com/dashboard
+- Create a new app, then copy the Client ID and Client Secret
 
 ### Customization
 

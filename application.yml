@@ -7,6 +7,14 @@ lavalink:
     sources:
       youtube: true
       spotify: true
+    plugins:
+      lavasrc:
+        sources:
+          spotify: true
+        spotify:
+          clientId: "${SPOTIFY_CLIENT_ID}"
+          clientSecret: "${SPOTIFY_CLIENT_SECRET}"
+          countryCode: "US"
 logging:
   level:
     root: INFO
