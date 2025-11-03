@@ -5,11 +5,12 @@ server:
 lavalink:
   server:
     password: "youshallnotpass"
-    # Performance optimizations for lower latency
-    bufferDurationMs: 400  # Lower = faster response, but may cause stuttering (400ms recommended)
-    frameBufferDurationMs: 5000  # Audio frame buffer (5000ms recommended)
+    # Performance optimizations with longer buffers for stream stability
+    bufferDurationMs: 800  # Increased buffer to handle stream URL refreshes (800ms)
+    frameBufferDurationMs: 10000  # Larger audio buffer to prevent interruptions (10 seconds)
     playerUpdateInterval: 5  # Player state update interval in ms (lower = more responsive)
     resamplingQuality: "HIGH"  # Audio quality: LOW, MEDIUM, HIGH
+    trackStuckThresholdMs: 20000  # Consider track stuck after 20 seconds of no audio
     sources:
       youtube: false  # Disabled - using YouTube Source Plugin instead (built-in is deprecated)
       youtubeMusic: false  # Disabled - using YouTube Source Plugin instead
@@ -23,6 +24,7 @@ lavalink:
 
   plugins:
     # LavaSrc (mirrors Spotify/Apple to direct sources like Deezer/SoundCloud)
+    # Using stable version with stream handling improvements
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.1"
       repository: "https://maven.lavalink.dev/releases"
       snapshot: false
@@ -38,12 +40,12 @@ plugins:
       clientId: "c1508ebfbb1845adaab4e294679977df"
       clientSecret: "7b4a880641b34db381a27412ebf6cc53"
       countryCode: "US"
-    # CRITICAL: prefer direct providers first; remove any ytsearch fallbacks
-    # This forces LavaSrc to use Deezer/SoundCloud instead of broken YouTube
+    # Provider order: Try SoundCloud first (more reliable), then Deezer, then YouTube as fallback
     providers:
-      - 'dzisrc:%ISRC%'      # best match via ISRC on Deezer
+      - 'scsearch:%QUERY%'   # SoundCloud search (most reliable for full playback)
+      - 'dzisrc:%ISRC%'      # Deezer via ISRC
       - 'dzsearch:%QUERY%'   # Deezer search
-      - 'scsearch:%QUERY%'   # SoundCloud search as final fallback
+      - 'ytsearch:%QUERY%'   # YouTube as final fallback (works with our YouTube plugin)
   youtube:
     enabled: true
     allowSearch: true
